@@ -59,13 +59,20 @@ const Statistic = (props) => {
 }
 
 const Statistics = (props) => {
+    if (props.tilastot.hyva !== 0 || props.tilastot.neutraali !== 0 || props.tilastot.huono !== 0) {
+        return (
+            <div>
+                <Statistic teksti={'Hyvä'} arvo={props.tilastot.hyva} />
+                <Statistic teksti={'Neutraali'} arvo={props.tilastot.neutraali} />
+                <Statistic teksti={'Huono'} arvo={props.tilastot.huono} />
+                <Statistic teksti={'Keskiarvo'} arvo={<Keskiarvo arvio={props.tilastot} />} />
+                <Statistic teksti={'Positiivisia'} arvo={<Positiivisia arvio={props.tilastot} />} />
+            </div>
+        )
+    }
     return (
         <div>
-            <Statistic teksti={'Hyvä'} arvo={props.tilastot.hyva} />
-            <Statistic teksti={'Neutraali'} arvo={props.tilastot.neutraali} />
-            <Statistic teksti={'Huono'} arvo={props.tilastot.huono} />
-            <Statistic teksti={'Keskiarvo'} arvo={<Keskiarvo arvio={props.tilastot} />} />
-            <Statistic teksti={'Positiivisia'} arvo={<Positiivisia arvio={props.tilastot} />} />
+            Yhtään palautetta ei ole annettu!
         </div>
     )
 }
