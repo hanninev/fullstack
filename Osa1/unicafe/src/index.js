@@ -34,20 +34,40 @@ class App extends React.Component {
             <div>
                 <Otsikko teksti={'anna palautetta'} />
                 <div>
-                    <button onClick={this.klikHyva}>Hyvä</button>
-                    <button onClick={this.klikNeutraali}>Neutraali</button>
-                    <button onClick={this.klikHuono}>Huono</button>
+                    <Button nappi={'Hyvä'} toiminto={this.klikHyva} />
+                    <Button nappi={'Neutraali'} toiminto={this.klikNeutraali} />
+                    <Button nappi={'Huono'} toiminto={this.klikHuono} />
                 </div>
 
                 <Otsikko teksti={'statistiikka'} />
-                <p>Hyvä: {this.state.hyva}</p>
-                <p>Neutraali: {this.state.neutraali}</p>
-                <p>Huono: {this.state.huono}</p>
-                <Keskiarvo arvio={this.state} />
-                <Positiivisia arvio={this.state} />
+                <Statistics tilastot={this.state} />
             </div>
         )
     }
+}
+
+const Button = (props) => {
+    return (
+        <button onClick={props.toiminto}>{props.nappi}</button>
+    )
+}
+
+const Statistic = (props) => {
+    return (
+        <p>{props.teksti}: {props.arvo}</p>
+    )
+}
+
+const Statistics = (props) => {
+    return (
+        <div>
+            <Statistic teksti={'Hyvä'} arvo={props.tilastot.hyva} />
+            <Statistic teksti={'Neutraali'} arvo={props.tilastot.neutraali} />
+            <Statistic teksti={'Huono'} arvo={props.tilastot.huono} />
+            <Statistic teksti={'Keskiarvo'} arvo={<Keskiarvo arvio={props.tilastot} />} />
+            <Statistic teksti={'Positiivisia'} arvo={<Positiivisia arvio={props.tilastot} />} />
+        </div>
+    )
 }
 
 const Otsikko = (props) => {
@@ -62,29 +82,25 @@ const Keskiarvo = (props) => {
     let ka = (props.arvio.huono * -1 + props.arvio.hyva) /
         (props.arvio.huono + props.arvio.neutraali + props.arvio.hyva)
 
-        if (isNaN(ka)) {
-            ka = 0
-        }
+    if (isNaN(ka)) {
+        ka = 0
+    }
 
     return (
-        <div>
-            <p> Keskiarvo: {ka.toFixed(1)}</p>
-        </div>
+        ka.toFixed(1)
     )
 }
 
 const Positiivisia = (props) => {
     let arvo = 100 * (props.arvio.hyva /
         (props.arvio.huono + props.arvio.neutraali + props.arvio.hyva))
-    
-        if (isNaN(arvo)) {
-            arvo = 0
-        }
+
+    if (isNaN(arvo)) {
+        arvo = 0
+    }
 
     return (
-        <div>
-            <p> Positiivisia: {arvo.toFixed(1)} %</p>
-        </div>
+        arvo.toFixed(1) + ' %'
     )
 }
 
