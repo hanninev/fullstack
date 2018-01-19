@@ -43,15 +43,47 @@ class App extends React.Component {
                 <p>Hyvä: {this.state.hyva}</p>
                 <p>Neutraali: {this.state.neutraali}</p>
                 <p>Huono: {this.state.huono}</p>
+                <Keskiarvo arvio={this.state} />
+                <Positiivisia arvio={this.state} />
             </div>
         )
     }
 }
 
-const Otsikko = (promps) => {
+const Otsikko = (props) => {
     return (
         <div>
-            <h1>{promps.teksti}</h1>
+            <h1>{props.teksti}</h1>
+        </div>
+    )
+}
+
+const Keskiarvo = (props) => {
+    let ka = (props.arvio.huono * -1 + props.arvio.hyva) /
+        (props.arvio.huono + props.arvio.neutraali + props.arvio.hyva)
+
+        if (isNaN(ka)) {
+            ka = 0
+        }
+
+    return (
+        <div>
+            <p> Keskiarvo: {ka.toFixed(1)}</p>
+        </div>
+    )
+}
+
+const Positiivisia = (props) => {
+    let arvo = 100 * (props.arvio.hyva /
+        (props.arvio.huono + props.arvio.neutraali + props.arvio.hyva))
+    
+        if (isNaN(arvo)) {
+            arvo = 0
+        }
+
+    return (
+        <div>
+            <p> Positiivisia: {arvo.toFixed(1)} %</p>
         </div>
     )
 }
