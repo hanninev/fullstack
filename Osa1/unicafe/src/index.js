@@ -11,22 +11,10 @@ class App extends React.Component {
         }
     }
 
-    klikHyva = () => {
-        this.setState({
-            hyva: this.state.hyva + 1
-        })
-    }
-
-    klikNeutraali = () => {
-        this.setState({
-            neutraali: this.state.neutraali + 1
-        })
-    }
-
-    klikHuono = () => {
-        this.setState({
-            huono: this.state.huono + 1
-        })
+    lisaaYksi = (mihin) => {
+        return () => {
+            this.setState({ [mihin]: this.state[mihin] + 1 })
+        }
     }
 
     render() {
@@ -34,9 +22,9 @@ class App extends React.Component {
             <div>
                 <Otsikko teksti={'anna palautetta'} />
                 <div>
-                    <Button nappi={'Hyvä'} toiminto={this.klikHyva} />
-                    <Button nappi={'Neutraali'} toiminto={this.klikNeutraali} />
-                    <Button nappi={'Huono'} toiminto={this.klikHuono} />
+                    <Button nappi={'Hyvä'} toiminto={this.lisaaYksi('hyva')} />
+                    <Button nappi={'Neutraali'} toiminto={this.lisaaYksi('neutraali')} />
+                    <Button nappi={'Huono'} toiminto={this.lisaaYksi('huono')} />
                 </div>
 
                 <Otsikko teksti={'statistiikka'} />
