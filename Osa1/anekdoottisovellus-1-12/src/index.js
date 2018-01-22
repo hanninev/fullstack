@@ -22,24 +22,34 @@ class App extends React.Component {
         }
     }
 
+    getMaxIndexOfMaxValue() {
+        return votes.indexOf(Math.max.apply(null, votes))
+    }
+
     render() {
         let value = Math.floor((Math.random() * anecdotes.length))
         console.log(votes)
-
+        console.log(this.getMaxIndexOfMaxValue())
         return (
             <div>
                 <p>{this.props.anecdotes[this.state.selected]}</p>
                 <p>has {this.props.votes[this.state.selected]} votes</p>
                 <Button toiminto={this.addVote(this.state.selected)} teksti={'vote'} />
                 <Button toiminto={this.chooseAnecdote(value)} teksti={'next anecdote'} />
+
+                <h2>anecdote with most votes:</h2>
+                <p>{this.props.anecdotes[this.getMaxIndexOfMaxValue()]}</p>
+                <p>has {this.props.votes[this.getMaxIndexOfMaxValue()]} votes</p>
+
+
             </div>
         )
     }
 }
 
-const Button = (propm) => {
+const Button = (props) => {
     return (
-        <button onClick={propm.toiminto}>{propm.teksti}</button>
+        <button onClick={props.toiminto}>{props.teksti}</button>
     )
 }
 
