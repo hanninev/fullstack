@@ -28,8 +28,7 @@ class App extends React.Component {
 
     render() {
         let value = Math.floor((Math.random() * anecdotes.length))
-        console.log(votes)
-        console.log(this.getMaxIndexOfMaxValue())
+
         return (
             <div>
                 <p>{this.props.anecdotes[this.state.selected]}</p>
