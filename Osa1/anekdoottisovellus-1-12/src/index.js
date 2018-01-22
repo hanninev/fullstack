@@ -9,23 +9,38 @@ class App extends React.Component {
         }
     }
 
-    chooseAntidote = () => {
+    chooseAnecdote = (value) => {
         return () => {
-        this.setState({ selected: Math.floor((Math.random() * anecdotes.length)) })
+            this.setState({ selected: value })
+        }
+    }
+
+    addVote = (value) => {
+        return () => {
+            votes[value] = votes[value] + 1
+            this.forceUpdate()
         }
     }
 
     render() {
-        console.log(this.state.selected)
+        let value = Math.floor((Math.random() * anecdotes.length))
+        console.log(votes)
 
         return (
             <div>
                 <p>{this.props.anecdotes[this.state.selected]}</p>
-
-                <button onClick={this.chooseAntidote()}>next anecdote</button>
+                <p>has {this.props.votes[this.state.selected]} votes</p>
+                <Button toiminto={this.addVote(this.state.selected)} teksti={'vote'} />
+                <Button toiminto={this.chooseAnecdote(value)} teksti={'next anecdote'} />
             </div>
         )
     }
+}
+
+const Button = (propm) => {
+    return (
+        <button onClick={propm.toiminto}>{propm.teksti}</button>
+    )
 }
 
 const anecdotes = [
@@ -37,7 +52,9 @@ const anecdotes = [
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+const votes = [0, 0, 0, 0, 0, 0]
+
 ReactDOM.render(
-    <App anecdotes={anecdotes} />,
+    <App anecdotes={anecdotes} votes={votes} />,
     document.getElementById('root')
 )
