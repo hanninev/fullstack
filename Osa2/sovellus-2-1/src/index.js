@@ -1,74 +1,48 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import App from './App'
 
-const Otsikko = (props) => <h1>{props.kurssi.nimi}</h1>
-
-const Sisalto = (props) => {
-  const rivit = () => props.osat.map(osa =>
-    <p key={osa.id}>
-      {osa.nimi} {osa.tehtavia}
-    </p>
-)
-
-  return(
-    <div>
-        {rivit()}
-    </div>
-  )
-}
-
-const Yhteensa = (props) => {
-  const rivit = () => props.osat.map(osa => osa.tehtavia)
-  const sum = rivit().reduce((a, b) => a+b);
-  
-  return(
-    <p>yhteensä {sum} tehtävää</p>
-  )
-}
-
-const App = () => {
-
-  return (
-    <div>
-        <Kurssi kurssi={kurssi} />
-    </div>
-  )
-}
-
-const Kurssi = (props) => {
-    const { kurssi } = props;
-
-    return (
-    <div>
-      <Otsikko kurssi={kurssi} />
-      <Sisalto osat={kurssi.osat} />
-      <Yhteensa osat={kurssi.osat} />
-    </div>
-    )
-}
-
-const kurssi = {
-   nimi: 'Half Stack -sovelluskehitys',
-   osat: [
-     {
-       nimi: 'Reactin perusteet',
-       tehtavia: 10,
-       id: 1
-     },
-     {
-       nimi: 'Tiedonvälitys propseilla',
-       tehtavia: 7,
-       id: 2
-     },
-     {
-       nimi: 'Komponenttien tila',
-       tehtavia: 14,
-       id: 3
-     }
-   ]
-}
+const kurssit = [
+    {
+      nimi: 'Half Stack -sovelluskehitys',
+      id: 1,
+      osat: [
+        {
+          nimi: 'Reactin perusteet',
+          tehtavia: 10,
+          id: 1
+        },
+        {
+          nimi: 'Tiedonvälitys propseilla',
+          tehtavia: 7,
+          id: 2
+        },
+        {
+          nimi: 'Komponenttien tila',
+          tehtavia: 14,
+          id: 3
+        }
+      ]
+    },
+    {
+      nimi: 'Node.js',
+      id: 2,
+      osat: [
+        {
+          nimi: 'Routing',
+          tehtavia: 3,
+          id: 1
+        },
+        {
+          nimi: 'Middlewaret',
+          tehtavia: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
 ReactDOM.render(
-  <App />,
+  <App kurssit={kurssit} />,
   document.getElementById('root')
 )
