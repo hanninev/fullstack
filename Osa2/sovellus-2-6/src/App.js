@@ -58,29 +58,11 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <div>
-            rajaa näytettäviä 
-            <input
-            value={this.state.filter}
-            onChange={this.handleFilterChange}
-             />
-         </div>
+        <Textbox text={'rajaa näytettäviä'} value={this.state.filter} handler={this.handleFilterChange} />
          <h3>Lisää uusi</h3>
         <form onSubmit={this.addPerson}>
-          <div>
-            nimi: 
-            <input
-            value={this.state.newName}
-            onChange={this.handleNameChange}
-             />
-          </div>
-          <div>
-            numero: 
-            <input
-            value={this.state.newNumber}
-            onChange={this.handleNumberChange}
-             />
-          </div>
+          <Textbox text={'nimi'} value={this.state.newName} handler={this.handleNameChange} />
+          <Textbox text={'numero'} value={this.state.newNumber} handler={this.handleNumberChange} />
           <div>
             <button type="submit">lisää</button>
           </div>
@@ -93,6 +75,18 @@ class App extends React.Component {
       
     )
   }
+}
+
+const Textbox = (props) => {
+  return(
+    <div>
+    {props.text} 
+      <input
+      value={props.value}
+      onChange={props.handler}
+      />
+    </div>
+  )
 }
 
 export default App
