@@ -10,7 +10,8 @@ class App extends React.Component {
         number: '0401234567' }
       ],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      filter: ''
     }
   }
 
@@ -20,6 +21,10 @@ class App extends React.Component {
 
   handleNumberChange = (event) => {
     this.setState({ newNumber: event.target.value })
+  }
+
+  handleFilterChange = (event) => {
+    this.setState({ filter: event.target.value })
   }
 
   addPerson = (event) => {
@@ -48,9 +53,19 @@ class App extends React.Component {
   }
 
   render() {
+    const personsToShow = this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <div>
+            rajaa näytettäviä 
+            <input
+            value={this.state.filter}
+            onChange={this.handleFilterChange}
+             />
+         </div>
+         <h3>Lisää uusi</h3>
         <form onSubmit={this.addPerson}>
           <div>
             nimi: 
@@ -70,9 +85,9 @@ class App extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
-        <h2>Numerot</h2>
+        <h3>Numerot</h3>
         <table><tbody>
-        {this.state.persons.map(person => <tr key={person.name}><th>{person.name}</th><th>{person.number}</th></tr>)}
+        {personsToShow.map(person => <tr key={person.name}><th>{person.name}</th><th>{person.number}</th></tr>)}
         </tbody></table>
       </div>
       
