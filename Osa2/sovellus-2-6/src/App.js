@@ -1,25 +1,33 @@
 import React from 'react';
+import styles from './styles.css'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' }
+        { name: 'Arto Hellas',
+        number: '0401234567' }
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
     }
   }
 
-  handleChange = (event) => {
+  handleNameChange = (event) => {
     this.setState({ newName: event.target.value })
+  }
+
+  handleNumberChange = (event) => {
+    this.setState({ newNumber: event.target.value })
   }
 
   addPerson = (event) => {
     event.preventDefault()
 
     const personObject = {
-      name: this.state.newName
+      name: this.state.newName,
+      number: this.state.newNumber
     }
 
     const dublicates = this.state.persons.filter(person => person.name === this.state.newName)
@@ -30,7 +38,8 @@ class App extends React.Component {
     this.setState(
       {
         persons: persons,
-        newName: ''
+        newName: '',
+        newNumber: ''
       }
     )
     } else {
@@ -45,9 +54,16 @@ class App extends React.Component {
         <form onSubmit={this.addPerson}>
           <div>
             nimi: 
-            <input type="text"
+            <input
             value={this.state.newName}
-            onChange={this.handleChange}
+            onChange={this.handleNameChange}
+             />
+          </div>
+          <div>
+            numero: 
+            <input
+            value={this.state.newNumber}
+            onChange={this.handleNumberChange}
              />
           </div>
           <div>
@@ -55,7 +71,9 @@ class App extends React.Component {
           </div>
         </form>
         <h2>Numerot</h2>
-        {this.state.persons.map(person => <li key={person.name}> {person.name}</li>)}
+        <table><tbody>
+        {this.state.persons.map(person => <tr key={person.name}><th>{person.name}</th><th>{person.number}</th></tr>)}
+        </tbody></table>
       </div>
       
     )
