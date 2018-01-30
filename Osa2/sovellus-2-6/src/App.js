@@ -7,30 +7,35 @@ class App extends React.Component {
       persons: [
         { name: 'Arto Hellas' }
       ],
-      newPerson: ''
+      newName: ''
     }
   }
 
   handleChange = (event) => {
-    this.setState({ newPerson: event.target.value })
+    this.setState({ newName: event.target.value })
   }
 
   addPerson = (event) => {
     event.preventDefault()
-    console.log('painettu nappulaa')
 
     const personObject = {
-      name: this.state.newPerson
+      name: this.state.newName
     }
 
+    const dublicates = this.state.persons.filter(person => person.name === this.state.newName)
+
+    if (dublicates.length === 0) {
     const persons = this.state.persons.concat(personObject)
 
     this.setState(
       {
         persons: persons,
-        newPerson: ''
+        newName: ''
       }
     )
+    } else {
+      alert('Et voi lisätä saman nimistä henkilöä!')
+    }
   }
 
   render() {
@@ -40,8 +45,8 @@ class App extends React.Component {
         <form onSubmit={this.addPerson}>
           <div>
             nimi: 
-            <input 
-            value={this.state.newPerson}
+            <input type="text"
+            value={this.state.newName}
             onChange={this.handleChange}
              />
           </div>
@@ -50,7 +55,7 @@ class App extends React.Component {
           </div>
         </form>
         <h2>Numerot</h2>
-        {this.state.persons.map(person => <li>{person.name}</li>)}
+        {this.state.persons.map(person => <li key={person.name}> {person.name}</li>)}
       </div>
       
     )
