@@ -25,10 +25,6 @@ class App extends React.Component {
     this.setState({ filter: event.target.value })
   }
 
-  setFilter = (event) => {
-    this.setState({ filter: event.target.value })
-  }
-
   render() {
     const countriesToShow = this.state.countries.filter(country => country.name.toLowerCase().includes(this.state.filter.toLowerCase()));
 

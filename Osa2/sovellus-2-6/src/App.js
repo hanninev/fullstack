@@ -1,18 +1,24 @@
 import React from 'react';
 import styles from './styles.css'
+import axios from 'axios'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      persons: [
-        { name: 'Arto Hellas',
-        number: '0401234567' }
-      ],
+      persons: [],
       newName: '',
       newNumber: '',
       filter: ''
     }
+  }
+
+  componentWillMount() {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        this.setState({ persons: response.data })
+      })
   }
 
   handleNameChange = (event) => {
@@ -38,15 +44,18 @@ class App extends React.Component {
     const dublicates = this.state.persons.filter(person => person.name === this.state.newName)
 
     if (dublicates.length === 0) {
-    const persons = this.state.persons.concat(personObject)
 
-    this.setState(
-      {
-        persons: persons,
-        newName: '',
-        newNumber: ''
-      }
-    )
+    axios.post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      this.setState(
+        {
+          persons: this.state.persons.concat(response.data),
+          newName: '',
+          newNumber: ''
+        }
+      )
+    })
+
     } else {
       alert('Et voi lisätä saman nimistä henkilöä!')
     }
