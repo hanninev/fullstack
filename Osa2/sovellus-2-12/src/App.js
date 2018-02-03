@@ -25,6 +25,10 @@ class App extends React.Component {
     this.setState({ filter: event.target.value })
   }
 
+  setFilter = (event) => {
+    this.setState({ filter: event.target.value })
+  }
+
   render() {
     const countriesToShow = this.state.countries.filter(country => country.name.toLowerCase().includes(this.state.filter.toLowerCase()));
 
@@ -42,7 +46,7 @@ class App extends React.Component {
             <div>
               find countries:
             <input value={this.state.filter} onChange={this.handleSearch}/>
-            {countriesToShow.map(country => <p key={country.name}>{country.name}</p>)}
+            {countriesToShow.map(country => <div onClick={() => this.setState({ filter: country.name})} key={country.name}><p>{country.name}</p></div>)}
             </div>
     )
     } else {
