@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css'
-import axios from 'axios'
+import personService from './services/persons'
 
 class App extends React.Component {
   constructor(props) {
@@ -13,11 +13,11 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount() {
-    axios
-      .get('http://localhost:3001/persons')
+  componentDidMount() {
+    personService
+      .getAll()
       .then(response => {
-        this.setState({ persons: response.data })
+        this.setState({persons: response.data})
       })
   }
 
@@ -45,10 +45,10 @@ class App extends React.Component {
 
     if (dublicates.length === 0) {
 
-    axios.post('http://localhost:3001/persons', personObject)
-    .then(response => {
-      this.setState(
-        {
+      personService
+      .create(personObject)
+      .then(response => {
+        this.setState({
           persons: this.state.persons.concat(response.data),
           newName: '',
           newNumber: ''
