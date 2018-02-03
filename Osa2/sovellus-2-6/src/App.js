@@ -17,7 +17,7 @@ class App extends React.Component {
     personService
       .getAll()
       .then(response => {
-        this.setState({persons: response.data})
+        this.setState({persons: response})
       })
   }
 
@@ -49,7 +49,7 @@ class App extends React.Component {
       .create(personObject)
       .then(response => {
         this.setState({
-          persons: this.state.persons.concat(response.data),
+          persons: this.state.persons.concat(response),
           newName: '',
           newNumber: ''
         }
@@ -61,8 +61,27 @@ class App extends React.Component {
     }
   }
 
+  deletePerson = (pers) => {
+    return () => {
+      if (window.confirm("Poistetaanko " + pers.name + "?")) { 
+        personService
+        .remove(pers.id)
+        .then(response => {
+          this.setState({persons: this.state.persons.filter(person => person.id !== pers.id)})
+        })
+      }
+  }
+}
+
   render() {
-    const personsToShow = this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+    console.log(this.state.persons)
+
+    let personsToShow = []
+    if (this.state.filter.length > 0) {
+    personsToShow = this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+  } else {
+      personsToShow = this.state.persons
+  }
 
     return (
       <div>
@@ -78,12 +97,18 @@ class App extends React.Component {
         </form>
         <h3>Numerot</h3>
         <table><tbody>
-        {personsToShow.map(person => <tr key={person.name}><th>{person.name}</th><th>{person.number}</th></tr>)}
+        {personsToShow.map(person => <tr key={person.name}><th>{person.name}</th><th>{person.number}</th><th><Button nappi={'Poista'} toiminto={this.deletePerson(person)} /></th></tr>)}
         </tbody></table>
       </div>
       
     )
   }
+}
+
+const Button = (props) => {
+  return (
+      <button onClick={props.toiminto}>{props.nappi}</button>
+  )
 }
 
 const Textbox = (props) => {
