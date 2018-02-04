@@ -9,7 +9,8 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      message: null
     }
   }
 
@@ -51,7 +52,8 @@ class App extends React.Component {
         this.setState({
           persons: this.state.persons.concat(response),
           newName: '',
-          newNumber: ''
+          newNumber: '',
+          message: `lisättiin ${response.name}`
         }
       )
     })
@@ -65,7 +67,8 @@ class App extends React.Component {
           this.setState({
             persons: persons.concat(personObject),
             newName: '',
-            newNumber: ''
+            newNumber: '',
+            message: `muutettiin henkilön ${dublicates[0].name} numeroa`
           })
         })
           }
@@ -78,14 +81,16 @@ class App extends React.Component {
         personService
         .remove(pers.id)
         .then(response => {
-          this.setState({persons: this.state.persons.filter(person => person.id !== pers.id)})
+          this.setState({
+            persons: this.state.persons.filter(person => person.id !== pers.id),
+            message: `poistettiin henkilö ${pers.name}`
+          })
         })
       }
   }
 }
 
   render() {
-    console.log(this.state.persons)
 
     let personsToShow = []
     if (this.state.filter.length > 0) {
@@ -94,8 +99,15 @@ class App extends React.Component {
       personsToShow = this.state.persons
   }
 
+  if(this.state.message !== null) {
+    setTimeout(() => {
+      this.setState({message: null})
+    }, 5000)
+  }
+
     return (
       <div>
+        <Notification message={this.state.message}/>
         <h2>Puhelinluettelo</h2>
         <Textbox text={'rajaa näytettäviä'} value={this.state.filter} handler={this.handleFilterChange} />
          <h3>Lisää uusi</h3>
@@ -130,6 +142,18 @@ const Textbox = (props) => {
       value={props.value}
       onChange={props.handler}
       />
+    </div>
+  )
+}
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="message">
+      {message}
     </div>
   )
 }
