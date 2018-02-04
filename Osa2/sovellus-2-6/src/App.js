@@ -10,7 +10,8 @@ class App extends React.Component {
       newName: '',
       newNumber: '',
       filter: '',
-      message: null
+      message: null,
+      error: null
     }
   }
 
@@ -60,10 +61,11 @@ class App extends React.Component {
 
     } else {
       if (window.confirm(dublicates[0].name + " on jo luettelossa, korvataanko vanha numero uudella?")) { 
-      personService
+        const persons = this.state.persons.filter(p => p.id !== dublicates[0].id)
+
+        personService
         .update(dublicates[0].id, personObject)
         .then(personObject => {
-          const persons = this.state.persons.filter(p => p.id !== dublicates[0].id)
           this.setState({
             persons: persons.concat(personObject),
             newName: '',
@@ -71,9 +73,15 @@ class App extends React.Component {
             message: `muutettiin henkilön ${dublicates[0].name} numeroa`
           })
         })
-          }
+        .catch(error => {
+          this.setState({
+            error: `muistiinpano '${dublicates[0].name}' on jo valitettavasti poistettu palvelimelta`,
+            persons: persons
+          })
+          })
         }
   }
+}
 
   deletePerson = (pers) => {
     return () => {
@@ -99,9 +107,12 @@ class App extends React.Component {
       personsToShow = this.state.persons
   }
 
-  if(this.state.message !== null) {
+  if(this.state.message !== null || this.state.error !== null) {
     setTimeout(() => {
-      this.setState({message: null})
+      this.setState({
+        message: null,
+        error: null
+      })
     }, 5000)
   }
 
@@ -110,7 +121,7 @@ class App extends React.Component {
         <Notification message={this.state.message}/>
         <h2>Puhelinluettelo</h2>
         <Textbox text={'rajaa näytettäviä'} value={this.state.filter} handler={this.handleFilterChange} />
-         <h3>Lisää uusi</h3>
+         <h3>Lisää uusi tai muuta olemassaolevaa numeroa</h3>
         <form onSubmit={this.addPerson}>
           <Textbox text={'nimi'} value={this.state.newName} handler={this.handleNameChange} />
           <Textbox text={'numero'} value={this.state.newNumber} handler={this.handleNumberChange} />
@@ -153,6 +164,18 @@ const Notification = ({ message }) => {
 
   return (
     <div className="message">
+      {message}
+    </div>
+  )
+}
+
+const Error = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="error">
       {message}
     </div>
   )
