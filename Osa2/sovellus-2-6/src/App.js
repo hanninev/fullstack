@@ -57,8 +57,19 @@ class App extends React.Component {
     })
 
     } else {
-      alert('Et voi lisätä saman nimistä henkilöä!')
-    }
+      if (window.confirm(dublicates[0].name + " on jo luettelossa, korvataanko vanha numero uudella?")) { 
+      personService
+        .update(dublicates[0].id, personObject)
+        .then(personObject => {
+          const persons = this.state.persons.filter(p => p.id !== dublicates[0].id)
+          this.setState({
+            persons: persons.concat(personObject),
+            newName: '',
+            newNumber: ''
+          })
+        })
+          }
+        }
   }
 
   deletePerson = (pers) => {
