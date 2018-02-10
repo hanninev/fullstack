@@ -75,7 +75,7 @@ class App extends React.Component {
         })
         .catch(error => {
           this.setState({
-            error: `muistiinpano '${dublicates[0].name}' on jo valitettavasti poistettu palvelimelta`,
+            error: `henkilö '${dublicates[0].name}' on jo valitettavasti poistettu palvelimelta`,
             persons: persons
           })
           })
