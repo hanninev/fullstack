@@ -1,9 +1,21 @@
 import React from 'react'
 import { filterCreation } from '../reducers/filterReducer'
+import PropTypes from 'prop-types'
 
 class Filter extends React.Component {
+    componentDidMount() {
+        const { store } = this.context
+        this.unsubscribe = store.subscribe(() =>
+          this.forceUpdate()
+        )
+      }
+    
+      componentWillUnmount() {
+        this.unsubscribe()
+      }
+      
     handleChange = (event) => {
-      this.props.store.dispatch(
+      this.context.store.dispatch(
         filterCreation(event.target.value)
         )
     }
@@ -19,6 +31,10 @@ class Filter extends React.Component {
         </div>
       )
     }
+  }
+
+Filter.contextTypes = {
+    store: PropTypes.object
   }
 
   export default Filter

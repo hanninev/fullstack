@@ -1,18 +1,30 @@
 import React from 'react'
 import { anecdoteCreation } from '../reducers/anecdoteReducer'
 import { notificationCreation, notificationRemover } from '../reducers/notificationReducer'
+import PropTypes from 'prop-types'
 
 class AnecdoteForm extends React.Component {
+  componentDidMount() {
+    const { store } = this.context
+    this.unsubscribe = store.subscribe(() =>
+      this.forceUpdate()
+    )
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.store.dispatch(
+    this.context.store.dispatch(
     anecdoteCreation(e.target.anecdote.value)
     )  
     e.target.anecdote.value = ''
   
-    this.props.store.dispatch(notificationCreation('New anecdote added!'))
+    this.context.store.dispatch(notificationCreation('New anecdote added!'))
     setTimeout(() => {
-      this.props.store.dispatch(notificationRemover())
+      this.context.store.dispatch(notificationRemover())
     }, 5000)
   }
    render() {
@@ -26,6 +38,10 @@ class AnecdoteForm extends React.Component {
       </div>
      )
    }
+}
+
+AnecdoteForm.contextTypes = {
+  store: PropTypes.object
 }
 
 export default AnecdoteForm
