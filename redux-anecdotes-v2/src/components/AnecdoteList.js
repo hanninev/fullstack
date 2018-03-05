@@ -39,9 +39,7 @@ class AnecdoteList extends React.Component {
 }
 
 const anecdotesToShow = (anecdotes, filter) => {
-  return anecdotes.filter(a => a.content.toLowerCase()
-                  .includes(filter.toLowerCase()))
-                  .sort((a, b) => b.votes - a.votes)
+  return anecdotes.filter(a => a.content.toLowerCase().includes(filter.toLowerCase())).sort((a, b) => b.votes - a.votes)
 }
 
 const mapStateToProps = (state) => {
