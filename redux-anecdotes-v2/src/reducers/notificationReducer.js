@@ -20,7 +20,8 @@ export const notificationCreation = (message) => {
 
 export const notificationRemover = () => {
     return {
-      type: 'REMOVE_MESSAGE'
+      type: 'REMOVE_MESSAGE',
+      notification: null
     }
   }
 

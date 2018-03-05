@@ -22,6 +22,7 @@ const initialState = {
 }
 
 const reducer = (store = initialState.anecdotes, action) => {
+  console.log(action.type)
     if (action.type === 'VOTE') {
         const old = store.filter(a => a.id !== action.id)
         const voted = store.find(a => a.id === action.id)

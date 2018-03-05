@@ -1,14 +1,19 @@
 import React from 'react'
-import { anecdoteCreation } from '../reducers/anecdoteReducer';
+import { anecdoteCreation } from '../reducers/anecdoteReducer'
+import { notificationCreation, notificationRemover } from '../reducers/notificationReducer'
 
 class AnecdoteForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.store.dispatch(
     anecdoteCreation(e.target.anecdote.value)
-    )
-  
+    )  
     e.target.anecdote.value = ''
+  
+    this.props.store.dispatch(notificationCreation('New anecdote added!'))
+    setTimeout(() => {
+      this.props.store.dispatch(notificationRemover())
+    }, 5000)
   }
    render() {
      return (
