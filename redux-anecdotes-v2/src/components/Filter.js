@@ -1,23 +1,12 @@
 import React from 'react'
 import { filterCreation } from '../reducers/filterReducer'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 class Filter extends React.Component {
-    componentDidMount() {
-        const { store } = this.context
-        this.unsubscribe = store.subscribe(() =>
-          this.forceUpdate()
-        )
-      }
-    
-      componentWillUnmount() {
-        this.unsubscribe()
-      }
-      
+
     handleChange = (event) => {
-      this.context.store.dispatch(
-        filterCreation(event.target.value)
-        )
+      this.props.filterCreation(event.target.value)
     }
 
     render() {
@@ -33,8 +22,22 @@ class Filter extends React.Component {
     }
   }
 
-Filter.contextTypes = {
-    store: PropTypes.object
+  const mapStateToProps = (state) => {
+    return {
+      filter: state.filter
+    }
   }
 
-  export default Filter
+  const mapDispatchToProps = {
+    filterCreation
+  }
+  
+  const ConnectedFilter = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Filter)
+  export default ConnectedFilter
+
+  Filter.contextTypes = {
+    store: PropTypes.object
+  }

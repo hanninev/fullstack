@@ -1,28 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 class Notification extends React.Component {
-  componentDidMount() {
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() =>
-      this.forceUpdate()
-    )
-  }
 
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
-  
   render() {
     const style = {
       border: 'solid',
       padding: 10,
       borderWidth: 1
     }    
-    if (this.context.store.getState().notification[0] !== null) {
+    if (this.props.notification[0] !== null) {
       return (
       <div style={style}>
-        {this.context.store.getState().notification}
+        {this.props.notification}
       </div>
       )
     } else {
@@ -33,8 +24,17 @@ class Notification extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    notification: state.notification
+  }
+}
+
+const ConnectedNotification = connect(
+  mapStateToProps
+)(Notification)
+export default ConnectedNotification
+
 Notification.contextTypes = {
   store: PropTypes.object
 }
-
-export default Notification
