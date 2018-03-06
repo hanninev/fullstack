@@ -1,5 +1,5 @@
 import React from 'react'
-import { notificationCreation, notificationRemover } from '../reducers/notificationReducer';
+import { notify } from '../reducers/notificationReducer';
 import { anecdoteVoter } from '../reducers/anecdoteReducer'
 import Filter from './Filter'
 import PropTypes from 'prop-types'
@@ -24,10 +24,7 @@ class AnecdoteList extends React.Component {
               has {anecdote.votes}
               <button onClick={() => {
                  this.props.anecdoteVoter(anecdote)
-                 this.props.notificationCreation('You voted "' + anecdote.content + '" ')
-                 setTimeout(() => {
-                   this.props.notificationRemover()
-                 }, 5000)
+                 this.props.notify(`you voted '${anecdote.content}'`, 10)
               }}>
                 vote
               </button>
@@ -54,8 +51,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   anecdoteVoter,
-  notificationCreation,
-  notificationRemover
+  notify
 }
 
 const ConnectedAnecdoteList = connect(
