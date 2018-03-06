@@ -7,14 +7,6 @@ import { connect } from 'react-redux'
 import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
-  handleVote = async (anecdote) => {
-    const votedAnecdote = await anecdoteService.vote(anecdote)
-    this.props.anecdoteVoter(votedAnecdote)
-    this.props.notificationCreation('You voted "' + votedAnecdote.content + '" ')
-    setTimeout(() => {
-      this.props.notificationRemover()
-    }, 5000)
-  }
 
   render() {
     return (
@@ -30,10 +22,9 @@ class AnecdoteList extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button onClick={async () => {
-                 const votedAnecdote = await anecdoteService.vote(anecdote)
-                 this.props.anecdoteVoter(votedAnecdote)
-                 this.props.notificationCreation('You voted "' + votedAnecdote.content + '" ')
+              <button onClick={() => {
+                 this.props.anecdoteVoter(anecdote)
+                 this.props.notificationCreation('You voted "' + anecdote.content + '" ')
                  setTimeout(() => {
                    this.props.notificationRemover()
                  }, 5000)

@@ -7,9 +7,8 @@ import { anecdoteInitialization } from './reducers/anecdoteReducer'
 import { connect } from 'react-redux'
 
 class App extends React.Component {
-  componentDidMount = async () => {
-    const anecdotes = await anecdoteService.getAll()
-    this.props.anecdoteInitialization(anecdotes)
+  componentDidMount = () => {
+    this.props.anecdoteInitialization()
   }
 
   render() {
