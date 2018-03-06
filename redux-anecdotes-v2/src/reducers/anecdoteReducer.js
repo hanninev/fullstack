@@ -11,9 +11,9 @@ const asObject = (anecdote) => {
 const reducer = (store = [], action) => {
   console.log(action.type)
     if (action.type === 'VOTE') {
-        const old = store.filter(a => a.id !== action.id)
-        const voted = store.find(a => a.id === action.id)
-
+        const old = store.filter(a => a.id !== action.data.id)
+        const voted = store.find(a => a.id === action.data.id)
+      console.log(action)
         return [...old, { ...voted, votes: voted.votes + 1 }]
     }
     if (action.type === 'CREATE') {
@@ -41,10 +41,11 @@ export const anecdoteInitialization = (data) => {
   }
 }
 
-export const anecdoteVoter = (anecdote) => {
+export const anecdoteVoter = (content) => {
+  console.log(content)
   return { 
     type: 'VOTE', 
-    id: anecdote.id
+    data: content
   }
 }
 

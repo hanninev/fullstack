@@ -4,8 +4,17 @@ import { anecdoteVoter } from '../reducers/anecdoteReducer'
 import Filter from './Filter'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
+  handleVote = async (anecdote) => {
+    const votedAnecdote = await anecdoteService.vote(anecdote)
+    this.props.anecdoteVoter(votedAnecdote)
+    this.props.notificationCreation('You voted "' + votedAnecdote.content + '" ')
+    setTimeout(() => {
+      this.props.notificationRemover()
+    }, 5000)
+  }
 
   render() {
     return (
@@ -21,12 +30,13 @@ class AnecdoteList extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button onClick={() => {
-                this.props.anecdoteVoter(anecdote)
-                this.props.notificationCreation('You voted "' + anecdote.content + '" ')
-                setTimeout(() => {
-                  this.props.notificationRemover()
-                }, 5000)
+              <button onClick={async () => {
+                 const votedAnecdote = await anecdoteService.vote(anecdote)
+                 this.props.anecdoteVoter(votedAnecdote)
+                 this.props.notificationCreation('You voted "' + votedAnecdote.content + '" ')
+                 setTimeout(() => {
+                   this.props.notificationRemover()
+                 }, 5000)
               }}>
                 vote
               </button>
@@ -39,10 +49,13 @@ class AnecdoteList extends React.Component {
 }
 
 const anecdotesToShow = (anecdotes, filter) => {
+  console.log(filter)
+  console.log(anecdotes)
   return anecdotes.filter(a => a.content.toLowerCase().includes(filter.toLowerCase())).sort((a, b) => b.votes - a.votes)
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.anecdotes)
   return {
     visibleAnecdotes: anecdotesToShow(state.anecdotes, state.filter)
   }
