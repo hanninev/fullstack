@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
+import { Button, Grid, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 
 class CreateNew extends React.Component {
   constructor() {

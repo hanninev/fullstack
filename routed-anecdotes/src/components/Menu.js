@@ -1,27 +1,32 @@
 import React from 'react'
-import { NavLink, Navbar } from 'react-router-dom'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
 
 const Menu = () => {
-    const style = {
-      color: "DarkSlateGrey",
-      backgroundColor: "lightblue",
-      padding: 10,
-      marginBottom: 10
-    }
-  
-  const active = {
-      fontWeight: 'bold',
-      color: 'DarkSlateGrey',
-      backgroundColor: "cadetblue",
-      padding: 10
-    }
-  
     return (
-    <div style={style}>
-    <NavLink exact to="/" activeStyle={active}>anecdotes</NavLink> &nbsp;
-    <NavLink exact to="/create" activeStyle={active}>create new</NavLink> &nbsp;
-    <NavLink exact to="/about" activeStyle={active}>about</NavLink> &nbsp;
-  </div>
-  )}
+        <Navbar inverse collapseOnSelect>
+            <Navbar.Header>
+                <Navbar.Brand>
+                    <a href="/">Anecdote app</a>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+                <Nav>
+                    <NavItem href="/">
+                        Anecdotes
+      </NavItem>
+                    <NavItem href="/create">
+                        Create
+      </NavItem>
+                    <NavItem href="/about">
+                        About
+      </NavItem>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
 
-  export default Menu
+
+    )
+}
+
+export default Menu

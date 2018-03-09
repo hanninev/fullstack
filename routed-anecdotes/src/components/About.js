@@ -19,7 +19,7 @@ const About = () => (
       <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
         </Col>
         <Col xsPush={0} sm={4} md={4}>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Linus_Torvalds_talking.jpeg" height="300" width="200"/>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Linus_Torvalds_talking.jpeg" height="300" width="200" alt=""/>
     </Col>
     </Row>
     </Grid>
