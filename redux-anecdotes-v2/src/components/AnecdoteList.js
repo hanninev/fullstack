@@ -4,7 +4,6 @@ import { anecdoteVoter } from '../reducers/anecdoteReducer'
 import Filter from './Filter'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
 
@@ -24,7 +23,7 @@ class AnecdoteList extends React.Component {
               has {anecdote.votes}
               <button onClick={() => {
                  this.props.anecdoteVoter(anecdote)
-                 this.props.notify(`you voted '${anecdote.content}'`, 10)
+                 this.props.notify(`you voted '${anecdote.content}'`, 5)
               }}>
                 vote
               </button>

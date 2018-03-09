@@ -1,15 +1,5 @@
 import anecdoteService from '../services/anecdotes'
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-    return {
-        content: anecdote,
-        id: getId(),
-        votes: 0
-    }
-}
-
 const reducer = (store = [], action) => {
   console.log(action.type)
     if (action.type === 'VOTE') {

@@ -3,7 +3,6 @@ import { anecdoteCreation } from '../reducers/anecdoteReducer'
 import { notify } from '../reducers/notificationReducer'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
 
