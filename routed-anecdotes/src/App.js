@@ -33,7 +33,7 @@ class App extends React.Component {
     }
   }
 
-  addNew = async (anecdote) => {
+  addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
     this.setState({ notification: 'a new anecdote ' + anecdote.content + ' created!' })

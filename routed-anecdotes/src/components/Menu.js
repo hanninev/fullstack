@@ -1,11 +1,12 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Navbar } from 'react-router-dom'
 
 const Menu = () => {
     const style = {
       color: "DarkSlateGrey",
       backgroundColor: "lightblue",
       padding: 10,
+      marginBottom: 10
     }
   
   const active = {

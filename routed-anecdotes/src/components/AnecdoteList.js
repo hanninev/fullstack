@@ -1,17 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Grid, ListGroupItem, ListGroup } from 'react-bootstrap'
 
 const AnecdoteList = ({ anecdotes }) => (
-    <div>
+    <Grid>
       <h2>Anecdotes</h2>
-      <ul>
+      
+      <ListGroup>
         {anecdotes.map(a =>
-          <li key={a.id}>
-            <Link to={`/anecdotes/${a.id}`}>{a.content}</Link>
-          </li>
+            <ListGroupItem key={a.id} href={`/anecdotes/${a.id}`}>{a.content}</ListGroupItem>
         )}
-      </ul>
-    </div>
+      </ListGroup>
+    </Grid>
   )
 
   export default AnecdoteList

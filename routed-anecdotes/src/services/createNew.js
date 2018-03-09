@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, Grid, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
 
 class CreateNew extends React.Component {
   constructor() {
@@ -28,24 +29,27 @@ class CreateNew extends React.Component {
 
   render() {
     return (
-      <div>
+      <Grid>
         <h2>create a new anecdote</h2>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            content
-            <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
-            author
-            <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
-            url for more info
-            <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
+          <FormGroup>
+            <ControlLabel>Content</ControlLabel>
+            <FormControl type="text" name='content' value={this.state.content} onChange={this.handleChange} />
+          </FormGroup>
+
+          <FormGroup>
+            <ControlLabel>Author</ControlLabel>
+            <FormControl type="text" name='author' value={this.state.author} onChange={this.handleChange} />
+          </FormGroup>
+
+          <FormGroup>
+            <ControlLabel>Url for more info</ControlLabel>
+            <FormControl type="text" name='info' value={this.state.info} onChange={this.handleChange} />
+          </FormGroup>
+
+          <Button type="submit">create</Button>
         </form>
-      </div>
+      </Grid>
     )
 
   }
